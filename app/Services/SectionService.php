@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Section;
+use App\Models\Student;
 use App\Models\Teacher;
 use App\Models\User;
 
@@ -23,5 +24,10 @@ class SectionService
         return $section
                 ->assign_teacher($teacher)
                 ->save();
+    }
+
+    public function assign_student(Section $section, Student $student)
+    {
+        return $student->assign_section($section)->save();
     }
 }

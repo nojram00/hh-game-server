@@ -2,12 +2,16 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Models\User;
+use Exception;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
+use Termwind\Components\Hr;
 
 class LoginRequest extends FormRequest
 {
@@ -18,6 +22,8 @@ class LoginRequest extends FormRequest
     {
         return true;
     }
+
+    protected $token_name = "auth_token";
 
     /**
      * Get the validation rules that apply to the request.
@@ -50,6 +56,25 @@ class LoginRequest extends FormRequest
         }
 
         RateLimiter::clear($this->throttleKey());
+    }
+
+    public function generate_token() : string
+    {
+
+        $auth = Auth::attempt($this->only('email', 'password'));
+        if ($auth) {
+
+            if($this->user()->role == User::ROLES['2'])
+            {
+                $token = $this->user()->createToken($this->token_name);
+
+                return $token->plainTextToken;
+            }
+
+            throw new HttpException(401, "Invalid user role, role must be a student. current role: {$this->user()->role}");
+        }
+
+        throw new HttpException(401, "Unauthenticated");
     }
 
     /**

@@ -2,12 +2,11 @@
 
 namespace App\Rules;
 
-use App\Models\Section;
-use App\Models\User;
+use App\Models\Student;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
-class SectionAssign implements ValidationRule
+class StudentAssign implements ValidationRule
 {
     /**
      * Run the validation rule.
@@ -16,10 +15,11 @@ class SectionAssign implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        $section = Section::find($value);
-        if($section == null)
+        $student = Student::find($value);
+
+        if ($student == null)
         {
-            $fail("Section not found. Please input a valid section id");
+            $fail("Student not found. Please input a valid student id...");
         }
     }
 }

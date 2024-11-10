@@ -3,57 +3,38 @@
 namespace App\Http\Controllers\ApiControllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\LoginRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules\Password;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class UserApiController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function generate_token(LoginRequest $request)
     {
-        //
-    }
+        $token = $request->generate_token();
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
-            'password' => ['required', Password::defaults()],
+        return response()->json([
+            'message' => 'Auth success!',
+            'token' => $token
         ]);
-
-
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(User $user)
+    public function get_student_info(Request $request)
     {
-        return response()->json(
-            $user->with('student')
-        );
-    }
+        try
+        {
+            return response()->json([
+                'data' => $request->user()->student->with('section')
+            ]);
+        }
+        catch (HttpException $e)
+        {
+            return response()->json([
+                'message' => $e->getMessage()
+            ], $e->getCode());
+        }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
     }
 }

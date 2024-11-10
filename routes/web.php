@@ -27,6 +27,20 @@ Route::get('/', function () {
     return Redirect::route('login');
 });
 
+Route::get('/devs/docs', function(){
+    return Inertia::render('Docs', [
+        'api_url' => url('/')
+    ]);
+})->name('api-docs');
+
+Route::get('/test-error-page',function(){
+    return Inertia::render('Errors/ErrorPage', [
+        'code' => 200,
+        'error' => 'Ok',
+        'message' => 'Testing Onleh!'
+    ]);
+});
+
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard', [
         'student_count' => Student::count(),

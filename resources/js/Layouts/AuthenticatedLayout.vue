@@ -77,6 +77,7 @@ const showingNavigationDropdown = ref(false);
                                         <DropdownLink :href="route('logout')" method="post" as="button">
                                             Log Out
                                         </DropdownLink>
+                                        <DropdownLink :href="route('api-docs')">Api Documentation</DropdownLink>
                                     </template>
                                 </Dropdown>
                             </div>
