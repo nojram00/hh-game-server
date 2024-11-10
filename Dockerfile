@@ -24,7 +24,7 @@ RUN composer install
 ENV DB_CONNECTION=pgsql \
     DB_HOST='ep-aged-glitter-a5b569fg.us-east-2.aws.neon.tech' \
     DB_PORT='5432' \
-    DB_DATABASE='mydb' \
+    DB_DATABASE='new_gameserver_db' \
     DB_USERNAME='mydb_owner' \
     DB_PASSWORD='oWhVc1x6zLOD' \
     APP_ENV=production \
