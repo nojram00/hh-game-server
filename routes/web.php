@@ -4,7 +4,11 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
+use App\Models\Section;
+use App\Models\Student;
+use App\Models\Teacher;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -20,16 +24,15 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+    return Redirect::route('login');
 });
 
 Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
+    return Inertia::render('Dashboard', [
+        'student_count' => Student::count(),
+        'teacher_count' => Teacher::count(),
+        'section_count' => Section::count()
+    ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -49,7 +52,10 @@ Route::middleware('auth')->group(function () {
 
     Route::controller(TeacherController::class)->group(function(){
         Route::get('/teachers', 'index')->name('teachers');
-
+        Route::get('/create-user', 'add')->name('create-user.get');
+        Route::get('/create-teacher/{user}','create_teacher_view')->name('create-teacher.get');
+        Route::post('/create-user', 'create_user')->name('create-user.post');
+        Route::post('/create-teacher/{user}', 'create_teacher')->name('create-teacher.post');
     });
 
 });

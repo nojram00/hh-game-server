@@ -11,6 +11,12 @@ class Teacher extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'firstname',
+        'lastname',
+        'middlename'
+    ];
+
     public function section() : HasOne
     {
         return $this->hasOne(Section::class);

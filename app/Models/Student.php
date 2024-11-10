@@ -10,6 +10,18 @@ class Student extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'firstname',
+        'lastname',
+        'middlename',
+        'pre_test_score',
+        'post_test_score',
+        'tera_mastery',
+        'ecology_mastery',
+        'momentum_mastery',
+        'quantum_mastery'
+    ];
+
     protected $appends = [ 'name' ];
 
     public function section() : BelongsTo

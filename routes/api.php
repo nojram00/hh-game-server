@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\ApiControllers\StudentApiController;
+use App\Http\Controllers\ApiControllers\UserApiController;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -15,5 +18,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+return $request->user();
+});
+
+Route::controller(StudentApiController::class)->group(function(){
+    Route::get('/students', 'index');
+    Route::get('/student/find/{student}', 'show');
+    Route::post('/student/create', 'store');
+    Route::patch('student/update/score', 'update_score');
+    Route::patch('/student/update/progress', 'update_progress');
+});
+
+Route::controller(UserApiController::class)->group(function(){
+
 });
