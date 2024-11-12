@@ -93,10 +93,14 @@ const teachers = ref(props.teachers)
 const loading = ref(false)
 
 const toggle_page = async (url) => {
-
     loading.value = true
 
-    const res = await axios.get(route('create-section.get'))
+    const res = await axios.get(url, {
+        headers : {
+            "Content-Type" : "application/json"
+        }
+    })
+
     teachers.value = res.data;
 
     loading.value = false
