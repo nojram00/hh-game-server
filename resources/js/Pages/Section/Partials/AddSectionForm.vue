@@ -86,6 +86,9 @@ import axios from 'axios';
 const props = defineProps({
     teachers : {
         type : Array
+    },
+    inProduction : {
+        type : Boolean
     }
 })
 
@@ -96,7 +99,12 @@ const toggle_page = async (link) => {
 
     loading.value = true
 
-    const res = await axios.get(link.replace('http://', 'https://'), {
+    if(props.inProduction)
+    {
+        link = link.replace('http://', 'https://');
+    }
+
+    const res = await axios.get(link, {
         headers : {
             "Content-Type" : "application/json"
         }

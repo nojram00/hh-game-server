@@ -7,6 +7,7 @@ use App\Models\Section;
 use App\Models\Teacher;
 use App\Services\SectionService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -52,7 +53,8 @@ class SectionController extends Controller
         }
 
         return Inertia::render('Section/Create',[
-            'teachers' => $teacher_list
+            'teachers' => $teacher_list,
+            'production_mode' => App::environment('production')
         ]);
     }
 
