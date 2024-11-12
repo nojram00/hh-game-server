@@ -44,7 +44,7 @@ class SectionController extends Controller
 
     public function create_view(Request $request)
     {
-        $teacher_list = Teacher::paginate(20);
+        $teacher_list = Teacher::paginate(3);
 
         if($request->wantsJson())
         {
