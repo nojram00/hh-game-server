@@ -29,17 +29,20 @@ const showingNavigationDropdown = ref(false);
 
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
+                                <NavLink v-if="$page.props.auth.user.role == 'admin'" :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
                                 </NavLink>
-                                <NavLink :href="route('students')" :active="route().current('students')">
+                                <NavLink v-if="$page.props.auth.user.role == 'admin'" :href="route('students')" :active="route().current('students')">
                                     Students
                                 </NavLink>
-                                <NavLink :href="route('sections')" :active="route().current('sections')">
+                                <NavLink v-if="$page.props.auth.user.role == 'admin'" :href="route('sections')" :active="route().current('sections')">
                                     Sections
                                 </NavLink>
-                                <NavLink :href="route('teachers')" :active="route().current('teachers')">
+                                <NavLink v-if="$page.props.auth.user.role == 'admin'" :href="route('teachers')" :active="route().current('teachers')">
                                     Teachers
+                                </NavLink>
+                                <NavLink v-if="$page.props.auth.user.role == 'teacher'" :href="route('teachers')" :active="route().current('teachers')">
+                                    My Students
                                 </NavLink>
                             </div>
                         </div>

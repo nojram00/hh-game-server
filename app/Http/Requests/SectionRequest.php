@@ -3,17 +3,18 @@
 namespace App\Http\Requests;
 
 use App\Models\Teacher;
+use App\Models\User;
 use App\Rules\TeacherInstance;
 use Illuminate\Foundation\Http\FormRequest;
 
-class AddSection extends FormRequest
+class SectionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true;
+        return $this->user()->role == User::ROLES['0'];
     }
 
     /**
@@ -25,7 +26,7 @@ class AddSection extends FormRequest
     {
         return [
             'section_name' => 'required|string',
-            'teacher_id' => ['numeric', new TeacherInstance()]
+            'teacher_id' => ['numeric', 'nullable', new TeacherInstance()]
         ];
     }
 

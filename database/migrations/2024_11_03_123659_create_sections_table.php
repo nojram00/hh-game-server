@@ -10,12 +10,12 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     */
+    */
     public function up(): void
     {
         Schema::create('sections', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Teacher::class, 'teacher_id');
+            $table->foreignIdFor(Teacher::class, 'teacher_id')->nullable();
             $table->string('section_name');
             $table->timestamps();
         });

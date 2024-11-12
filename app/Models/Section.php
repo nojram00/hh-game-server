@@ -42,6 +42,11 @@ class Section extends Model
 
     public function getTeacherNameAttribute()
     {
-        return $this->teacher->lastname.", ".$this->teacher->firstname." ".$this->teacher->middlename;
+        if($this->teacher)
+        {
+            return $this->teacher->lastname.", ".$this->teacher->firstname." ".$this->teacher->middlename;
+        }
+
+        return "(No Teacher Assigned)";
     }
 }

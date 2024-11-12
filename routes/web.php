@@ -55,26 +55,48 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::controller(StudentController::class)->group(function(){
-        Route::get('/students', 'student_view')->name('students');
-        Route::get('/student/{student}', 'info')->name('student');
+
+        Route::middleware('role.admin')->group(function(){
+            Route::get('/students', 'student_view')->name('students');
+            Route::get('/student/{student}', 'info')->name('student');
+        });
+
+        Route::middleware('role.teacher')->group(function(){
+
+        });
+
     });
 
     Route::controller(SectionController::class)->group(function(){
-        Route::get('/sections', 'index')->name('sections');
-        Route::get('/section/{section}', 'info')->name('section');
-        Route::get('/create-section', 'create_view')->name('create-section.get');
-        Route::post('/create-section', 'create')->name('create-section.post');
+
+        Route::middleware('role.teacher')->group(function () {
+            Route::get('/my-section', 'get_teacher_section')->name('my-section');
+        });
+
+        Route::middleware("role.admin")->group(function () {
+            Route::get('/sections', 'index')->name('sections');
+            Route::get('/section/{section}', 'info')->name('section');
+            Route::get('/create-section', 'create_view')->name('create-section.get');
+            Route::post('/create-section', 'create')->name('create-section.post');
+            Route::get('/edit-section', 'edit')->name('edit-section.get');
+            Route::patch('/edit-section', 'update')->name('edit-section.patch');
+        });
     });
 
     Route::controller(TeacherController::class)->group(function(){
-        Route::get('/teachers', 'index')->name('teachers');
-        Route::get('/create-user', 'add')->name('create-user.get');
-        Route::get('/create-teacher/{user}','create_teacher_view')->name('create-teacher.get');
-        Route::post('/create-user', 'create_user')->name('create-user.post');
-        Route::post('/create-teacher/{user}', 'create_teacher')->name('create-teacher.post');
+
+        Route::middleware('role.admin')->group(function(){
+            Route::get('/teachers', 'index')->name('teachers');
+            Route::get('/create-user', 'add')->name('create-user.get');
+            Route::get('/create-teacher/{user}','create_teacher_view')->name('create-teacher.get');
+            Route::post('/create-user', 'create_user')->name('create-user.post');
+            Route::post('/create-teacher/{user}', 'create_teacher')->name('create-teacher.post');
+        });
+
+        Route::post('/setup', 'complete_setup')->name('setup.post');
+        Route::get('/setup', 'setup_teacher_profile')->name('setup.get');
     });
 
 });
-
 
 require __DIR__.'/auth.php';

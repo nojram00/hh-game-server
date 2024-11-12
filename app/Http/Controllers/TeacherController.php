@@ -7,12 +7,14 @@ use App\Models\Teacher;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Validation\Rules\Password;
 use Inertia\Inertia;
+use Throwable;
 
 class TeacherController extends Controller
 {
@@ -118,6 +120,56 @@ class TeacherController extends Controller
             $user->delete();
 
             abort(500);
+        }
+    }
+
+    public function setup_teacher_profile(Request $request)
+    {
+        if($request->user()->teacher != null)
+        {
+            return redirect()->route('my-section');
+        }
+
+        return Inertia::render('Setup');
+    }
+
+    public function complete_setup(Request $request)
+    {
+
+        // $request->validate([
+        //     'firstname' => 'required|string|max:255',
+        //     'lastname' => 'required|string|max:255'
+        // ]);
+
+        DB::beginTransaction();
+
+        try
+        {
+            $teacher = new Teacher([
+                'firstname' => $request->firstname,
+                'middlename' => $request->middlename ?? "",
+                'lastname' => $request->lastname
+            ]);
+
+            $teacher->assign_user($request->user());
+
+            $teacher->save();
+
+            DB::commit();
+
+            return Redirect::route('my-section');
+        }
+        catch(Throwable $e)
+        {
+
+            DB::rollBack();
+
+            Auth::guard('web')->logout();
+
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+
+            return redirect('/');
         }
     }
 }

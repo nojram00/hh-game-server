@@ -1,13 +1,12 @@
 <template>
-    <Head :title="'Section - ' + section_name" />
+    <Head title="My Section" />
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-400 leading-tight">Section - {{  section_name }}</h2>
-            <p>Teacher: {{ teacher }}</p>
+            <h2 class="font-semibold text-xl text-gray-400 leading-tight">{{  section == null ? "No Section Assigned" : `Section - ${section.section_name}` }}</h2>
+            <p>Teacher: {{ teacher.name }}</p>
         </template>
 
-        <div class="px-4 w-full relative h-[720px]">
-            <Link class="btn absolute top-0 right-0 mr-10 mt-5" :href="route('edit-section.get')">Assign Teacher</Link>
+        <div v-if="students !== null" class="px-4 w-full relative h-[720px]">
             <table v-if="students.data.length > 0" class="table table-auto p-3 mt-3">
                 <thead>
                     <tr class="bg-accent text-white text-lg">
@@ -52,27 +51,30 @@
                 :current-page="students.current_page"
             />
         </div>
+
+        <div v-else>
+            <Container>
+                <div class="p-6 text-gray-900">You have no assigned sections right now...</div>
+            </Container>
+        </div>
     </AuthenticatedLayout>
 </template>
 <script setup>
-import Container from '@/Components/Container.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import Pagination from '@/Components/Pagination.vue';
-import { Head, Link } from '@inertiajs/vue3';
+import Container from '@/Components/Container.vue';
+import { Head } from '@inertiajs/vue3';
 
 defineProps({
-    students: {
-        type : Object,
-        required: true
+    section : {
+        type: Object
     },
-    section_name : {
-        type: String
+    students : {
+        type : Object
     },
     teacher : {
-        type: String
+        type: Object
     }
 })
 </script>
-<style lang="">
 
-</style>

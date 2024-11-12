@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StudentFilter;
 use App\Models\Student;
 use App\Models\User;
 use App\Services\StudentService;
@@ -21,9 +22,9 @@ class StudentController extends Controller
         $this->studentService = $service;
     }
 
-    public function student_view()
+    public function student_view(StudentFilter $request)
     {
-        $students = Student::paginate(20);
+        $students = $request->sort_by();
 
         return Inertia::render('Students', [
             'students' => $students
@@ -67,8 +68,6 @@ class StudentController extends Controller
             )
             ->assign_user($user)
             ->save();
-
     }
-
 
 }

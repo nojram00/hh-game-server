@@ -7,6 +7,7 @@
 
         <div class="px-4 w-full relative h-[720px]">
 
+
         </div>
     </AuthenticatedLayout>
 </template>

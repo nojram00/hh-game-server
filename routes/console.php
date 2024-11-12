@@ -36,3 +36,19 @@ Artisan::command('create-su', function(){
 Artisan::command('test-shit {params}', function(){
     $this->comment($this->argument('params'));
 });
+
+Artisan::command('get_section {id}', function(){
+    $user = User::find($this->argument('id'));
+
+    if($user != null)
+    {
+        $teacher = $user->teacher;
+
+        $this->comment($user->name);
+
+        return;
+    }
+
+    $this->comment('No User found');
+
+});

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\AddSection;
+use App\Http\Requests\SectionRequest;
 use App\Models\Section;
 use App\Models\Teacher;
 use App\Services\SectionService;
@@ -58,7 +58,7 @@ class SectionController extends Controller
         ]);
     }
 
-    public function create(AddSection $request)
+    public function create(SectionRequest $request)
     {
         DB::beginTransaction();
 
@@ -68,7 +68,11 @@ class SectionController extends Controller
                 'section_name' => $request->section_name
             ]);
 
-            $section->assign_teacher($request->get_teacher());
+
+            if($request->get_teacher() != null)
+            {
+                $section->assign_teacher($request->get_teacher());
+            }
 
             $section->save();
 
@@ -85,6 +89,62 @@ class SectionController extends Controller
 
             return Redirect::route('sections')->with('error', 'Section Failed to add');
         }
+    }
 
+    public function edit(Section $section, Request $request)
+    {
+        $teacher_list = Teacher::paginate(3);
+
+        if($request->wantsJson())
+        {
+            return response()->json($teacher_list);
+        }
+
+        return Inertia::render('Section/Edit',[
+            'section' => $section,
+            'teachers' => $teacher_list,
+            'production_mode' => App::environment('production')
+        ]);
+    }
+
+    public function update(Section $section, SectionRequest $request)
+    {
+        try
+        {
+            $section->update([
+                'section_name' => $request->section_name
+            ]);
+
+            if($request->get_teacher())
+            {
+                $section->assign_teacher($request->get_teacher());
+
+                $section->save();
+            }
+
+            return Redirect::route('edit-section.get');
+        }
+        catch (Throwable $e)
+        {
+            return Redirect::route();
+        }
+    }
+
+    public function get_teacher_section(Request $request)
+    {
+
+        $teacher = $request->user()->teacher;
+        $section = $request->user()->teacher->section;
+
+        if($section != null && $section->students != null)
+        {
+            $students = $section->students->paginate(20);
+        }
+
+        return Inertia::render('MySection', [
+            'section' => $section,
+            'students' => $students ?? null,
+            'teacher' => $teacher
+        ]);
     }
 }

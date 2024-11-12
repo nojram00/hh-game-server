@@ -28,4 +28,9 @@ class StudentService
 
         return $assigned;
     }
+
+    public function get_students_from_section(Section $section)
+    {
+        return $section->students()->paginate(20);
+    }
 }

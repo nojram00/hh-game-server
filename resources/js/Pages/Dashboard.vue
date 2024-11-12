@@ -32,7 +32,7 @@ defineProps({
                         <p>No. of registered students</p>
 
                         <div class="absolute bottom-0 right-0 p-4">
-                            <Link :href="route('students')" class="btn">View</Link>
+                            <Link v-if="$page.props.auth.user.role == 'admin'" :href="route('students')" class="btn">View</Link>
                         </div>
                     </div>
                 </div>
@@ -43,7 +43,7 @@ defineProps({
                         <p>No. of registered teachers</p>
 
                         <div class="absolute bottom-0 right-0 p-4">
-                            <Link :href="route('teachers')" class="btn">View</Link>
+                            <Link v-if="$page.props.auth.user.role == 'admin'" :href="route('teachers')" class="btn">View</Link>
                         </div>
                     </div>
                 </div>
@@ -54,7 +54,7 @@ defineProps({
                         <p>No. of available sections</p>
 
                         <div class="absolute bottom-0 right-0 p-4">
-                            <Link :href="route('sections')" class="btn">View</Link>
+                            <Link v-if="$page.props.auth.user.role == 'admin'" :href="route('sections')" class="btn">View</Link>
                         </div>
                     </div>
                 </div>
