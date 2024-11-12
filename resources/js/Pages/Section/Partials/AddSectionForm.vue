@@ -94,13 +94,9 @@ const loading = ref(false)
 
 const toggle_page = async (link) => {
 
-    let url = new URL(link);
-
     loading.value = true
 
-    url.protocol = 'https';
-
-    const res = await axios.get(url.href, {
+    const res = await axios.get(link.replace('http://', 'https://'), {
         headers : {
             "Content-Type" : "application/json"
         }
