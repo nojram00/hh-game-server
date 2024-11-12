@@ -12,6 +12,10 @@ class Section extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'section_name'
+    ];
+
     protected $appends = [
         'teacher_name'
     ];

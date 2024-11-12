@@ -40,6 +40,15 @@ class TeacherController extends Controller
             'password' => ['required', Password::defaults()],
         ]);
 
+        $existed = User::where('email', '=', $request->email)
+                        ->where('name', '=', $request->name)
+                        ->get();
+
+        if($existed->isNotEmpty())
+        {
+            return Redirect::route('create-teacher.get', $existed->first()->id);
+        }
+
         DB::beginTransaction();
 
         try

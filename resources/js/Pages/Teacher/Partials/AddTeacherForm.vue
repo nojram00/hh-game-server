@@ -2,8 +2,6 @@
     <section>
         <header>
             <h2 class="text-lg font-medium">Add Teacher Information</h2>
-
-
         </header>
 
         <form @submit.prevent="submit" class="mt-6 space-y-6">

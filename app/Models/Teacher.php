@@ -17,6 +17,8 @@ class Teacher extends Model
         'middlename'
     ];
 
+    protected $appends = ['name'];
+
     public function section() : HasOne
     {
         return $this->hasOne(Section::class);
@@ -33,5 +35,10 @@ class Teacher extends Model
         {
             return $this->user()->associate($user);
         }
+    }
+
+    public function getNameAttribute()
+    {
+        return $this->lastname.", ".$this->firstname.", ".$this->middlename;
     }
 }

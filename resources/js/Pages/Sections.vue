@@ -6,6 +6,11 @@
         </template>
 
         <div class="px-4 w-full h-[720px] relative">
+
+            <div class="top-0 left-0 ml-3 pt-3">
+                <Link :href="route('create-section.get')" method="GET" class="btn">Add Section</Link>
+            </div>
+
             <table v-if="sections.data.length > 0" class="table table-auto overflow-y-auto p-3 mt-3">
                 <thead>
                     <tr class="bg-accent text-white text-lg">

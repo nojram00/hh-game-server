@@ -62,6 +62,8 @@ Route::middleware('auth')->group(function () {
     Route::controller(SectionController::class)->group(function(){
         Route::get('/sections', 'index')->name('sections');
         Route::get('/section/{section}', 'info')->name('section');
+        Route::get('/create-section', 'create_view')->name('create-section.get');
+        Route::post('/create-section', 'create')->name('create-section.post');
     });
 
     Route::controller(TeacherController::class)->group(function(){
