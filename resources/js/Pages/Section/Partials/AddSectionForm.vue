@@ -92,10 +92,15 @@ const props = defineProps({
 const teachers = ref(props.teachers)
 const loading = ref(false)
 
-const toggle_page = async (url) => {
+const toggle_page = async (link) => {
+
+    let url = new URL(link);
+
     loading.value = true
 
-    const res = await axios.get(url, {
+    url.protocol = 'https';
+
+    const res = await axios.get(url.href, {
         headers : {
             "Content-Type" : "application/json"
         }
