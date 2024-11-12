@@ -19,7 +19,11 @@
 
                 <InputLabel for="teachers" value="Teacher"/>
 
-                <div class="grid w-full grid-cols-3 gap-4 border-2 border-gray-600 p-5 mt-2 rounded-lg">
+                <div v-if="loading == true" class="w-full flex items-center justify-center">
+                    <span class="loading loading-dots loading-md"></span>
+                </div>
+
+                <div v-else class="grid w-full grid-cols-3 gap-4 border-2 border-gray-600 p-5 mt-2 rounded-lg">
                     <label v-for="teacher in teachers.data" :class="`card
                             relative border-2 cursor-pointer
                             shadow-md
@@ -37,27 +41,17 @@
 
                 <div class="p-5">
                     <div class="join">
-                        <Link :href="teachers.first_page_url" preserve-state class="join-item btn">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />
-                            </svg>
-                        </Link>
-                        <Link :href="teachers.prev_page_url" preserve-state class="join-item btn">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <button type="button" @click="toggle_page(teachers.prev_page_url)" class="join-item btn hover:bg-gray-200">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-3 fill-white">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
                             </svg>
-                        </Link>
-                        <p class="join-item btn bg-accent text-white">{{ teachers.current_page }}</p>
-                        <Link :href="teachers.next_page_url" preserve-state class="join-item btn">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        </button>
+                        <button type="button" class="w-10 btn join-item text-white">{{ teachers.current_page }}</button>
+                        <button type="button" @click="toggle_page(teachers.next_page_url)" class="join-item btn hover:bg-gray-200">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-3 fill-white">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                             </svg>
-                        </Link>
-                        <Link :href="teachers.last_page_url" preserve-state class="join-item btn">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />
-                            </svg>
-                        </Link>
+                        </button>
                     </div>
                 </div>
 
@@ -87,6 +81,7 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import Pagination from '@/Components/Pagination.vue';
 import { useForm, Link } from '@inertiajs/vue3';
 import { ref } from 'vue';
+import axios from 'axios';
 
 const props = defineProps({
     teachers : {
@@ -95,9 +90,16 @@ const props = defineProps({
 })
 
 const teachers = ref(props.teachers)
+const loading = ref(false)
 
-const toggle_page = () => {
+const toggle_page = async (url) => {
 
+    loading.value = true
+
+    const res = await axios.get(route('create-section.get'))
+    teachers.value = res.data;
+
+    loading.value = false
 }
 
 const form = useForm({
