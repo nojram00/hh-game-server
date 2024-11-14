@@ -60,21 +60,16 @@ class LoginRequest extends FormRequest
 
     public function generate_token() : string
     {
+        $this->authenticate();
 
-        $auth = Auth::attempt($this->only('email', 'password'));
-        if ($auth) {
+        if($this->user()->role == User::ROLES['2'])
+        {
+            $token = $this->user()->createToken($this->token_name);
 
-            if($this->user()->role == User::ROLES['2'])
-            {
-                $token = $this->user()->createToken($this->token_name);
-
-                return $token->plainTextToken;
-            }
-
-            throw new HttpException(401, "Invalid user role, role must be a student. current role: {$this->user()->role}");
+            return $token->plainTextToken;
         }
 
-        throw new HttpException(401, "Unauthenticated");
+        throw new HttpException(401, "Invalid user role, role must be a student. current role: {$this->user()->role}");
     }
 
     /**
