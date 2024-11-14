@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateTeacherForm;
+use App\Models\Section;
 use App\Models\Teacher;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -74,10 +76,20 @@ class TeacherController extends Controller
         }
     }
 
-    public function create_teacher_view(User $user)
+    public function create_teacher_view(User $user, Request $request)
     {
+
+        $sections = Section::simplePaginate(3);
+
+        if($request->wantsJson())
+        {
+            return response()->json($sections);
+        }
+
         return Inertia::render('Teacher/CreateTeacher', [
-            'user' => $user
+            'user' => $user,
+            'sections' => $sections,
+            'in_production' => App::environment('production')
         ]);
     }
 

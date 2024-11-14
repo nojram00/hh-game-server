@@ -41,13 +41,13 @@
 
                 <div class="p-5">
                     <div class="join">
-                        <button type="button" @click="toggle_page(teachers.prev_page_url)" class="join-item btn hover:bg-gray-200">
+                        <button :disabled="teachers.prev_page_url === null" type="button" @click="toggle_page(teachers.prev_page_url)" class="join-item btn hover:bg-gray-200">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-3 fill-white">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
                             </svg>
                         </button>
                         <button type="button" class="w-10 btn join-item text-white">{{ teachers.current_page }}</button>
-                        <button type="button" @click="toggle_page(teachers.next_page_url)" class="join-item btn hover:bg-gray-200">
+                        <button :disabled="teachers.next_page_url === null" type="button" @click="toggle_page(teachers.next_page_url)" class="join-item btn hover:bg-gray-200">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-3 fill-white">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                             </svg>

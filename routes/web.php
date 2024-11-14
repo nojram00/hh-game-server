@@ -8,6 +8,8 @@ use App\Models\Section;
 use App\Models\Student;
 use App\Models\Teacher;
 use Illuminate\Foundation\Application;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -33,6 +35,9 @@ Route::get('/devs/docs', function(){
     ]);
 })->name('api-docs');
 
+
+if(App::environment('local'))
+{
 Route::get('/test-error-page',function(){
     return Inertia::render('Errors/ErrorPage', [
         'code' => 200,
@@ -40,6 +45,19 @@ Route::get('/test-error-page',function(){
         'message' => 'Testing Onleh!'
     ]);
 });
+
+    Route::get('/test', function(Request $request){
+        $sections = Section::simplePaginate(3);
+
+        if($request->wantsJson())
+        {
+            return response()->json($sections);
+        }
+
+        return "Hello World";
+    });
+}
+
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard', [
