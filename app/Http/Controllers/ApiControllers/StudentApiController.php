@@ -41,7 +41,7 @@ class StudentApiController extends Controller
      */
     public function store(StudentProfile $request)
     {
-        $request->validate();
+        // $request->validate();
 
         DB::beginTransaction();
 
