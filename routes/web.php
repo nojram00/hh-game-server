@@ -96,8 +96,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/section/{section}', 'info')->name('section');
             Route::get('/create-section', 'create_view')->name('create-section.get');
             Route::post('/create-section', 'create')->name('create-section.post');
-            Route::get('/edit-section', 'edit')->name('edit-section.get');
-            Route::patch('/edit-section', 'update')->name('edit-section.patch');
+            Route::get('/edit-section/{section}', 'edit')->name('edit-section.get');
+            Route::patch('/edit-section/{section}', 'update')->name('edit-section.patch');
         });
     });
 

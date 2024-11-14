@@ -7,7 +7,7 @@
         </template>
 
         <div class="px-4 w-full relative h-[720px]">
-            <Link class="btn absolute top-0 right-0 mr-10 mt-5" :href="route('edit-section.get')">Assign Teacher</Link>
+            <Link class="btn absolute top-0 right-0 mr-10 mt-5" :href="route('edit-section.get', section_id)">Update Info</Link>
             <table v-if="students.data.length > 0" class="table table-auto p-3 mt-3">
                 <thead>
                     <tr class="bg-accent text-white text-lg">
@@ -70,6 +70,9 @@ defineProps({
     },
     teacher : {
         type: String
+    },
+    section_id : {
+        type : Number
     }
 })
 </script>

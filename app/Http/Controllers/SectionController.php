@@ -39,7 +39,8 @@ class SectionController extends Controller
         return Inertia::render('Section/Info', [
             'students' => $students,
             'teacher' => $teacher,
-            'section_name' => $section_name
+            'section_name' => $section_name,
+            'section_id' => $section->id
         ]);
     }
 
@@ -126,7 +127,7 @@ class SectionController extends Controller
         }
         catch (Throwable $e)
         {
-            return Redirect::route();
+            return redirect()->route('section', $section->id);
         }
     }
 
