@@ -34,6 +34,7 @@ Route::prefix('/v1')->group(function(){
         Route::middleware('auth:sanctum')->group(function(){
             Route::patch('/student/update/score', 'update_score');
             Route::patch('/student/update/progress', 'update_progress');
+            Route::patch('/student/update/aspiration', 'update_aspiration');
             Route::patch('/student/me/assign-section/{section}', 'assign_self');
         });
     });

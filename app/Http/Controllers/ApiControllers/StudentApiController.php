@@ -170,6 +170,25 @@ class StudentApiController extends Controller
         ],400);
     }
 
+    public function update_aspiration(Request $request)
+    {
+        $updated = $request->user()->section->update([
+            'aspiration' => $request->aspiration
+        ]);
+
+        if($updated)
+        {
+            return response()->json([
+                'message' => 'Student Aspiration Updated!',
+                'data' => $request->user()->student
+            ]);
+        }
+
+        return response()->json([
+            'message' => 'Invalid request body!'
+        ],400);
+    }
+
     public function assign(Request $request)
     {
         $request->validate([

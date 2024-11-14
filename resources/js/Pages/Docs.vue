@@ -13,7 +13,8 @@
                                 <li><a href="#s4">Assign student to a section</a></li>
                                 <li><a href="#s5">Update authenticated student score</a></li>
                                 <li><a href="#s6">Update authenticated student progress</a></li>
-                                <li><a href="#s7">Assign authenticated student to a section</a></li>
+                                <li><a href="#s7">Update authenticated student progress</a></li>
+                                <li><a href="#s8">Assign authenticated student to a section</a></li>
                             </ul>
                         </li>
                         <li class="text-lg"><a href="#users">Users</a>
@@ -103,7 +104,7 @@
                                 </li>
                             </ul>
                         </li>
-                        <li><h1 class="font-bold text-2xl">Note: The following endpoints requires an authentication token which to put inside an Authorization Header. <br /> To know how to add and generate a token click <a href="" class="underline">here</a>.</h1></li>
+                        <li><h1 class="font-bold text-2xl">Note: The following endpoints requires an authentication token which to put inside an Authorization Header. <br /> To know how to add and generate a token click <a href="#u1" class="underline">here</a>.</h1></li>
                         <li class="ml-4" id="s5">
                             <h1 class="font-bold text-xl">/student/update/score</h1>
                             <ul class="space-y-3 m-4">
@@ -150,7 +151,30 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="ml-4" id="s7">
+
+                        <li class="ml-4" id="s8">
+                            <h1 class="font-bold text-xl">/student/update/aspiration</h1>
+                            <ul class="space-y-3 m-4">
+                                <li>METHOD: PATCH</li>
+                                <li>
+                                    REQUEST BODY:
+                                    <ul class="m-4">
+                                        <li><code>aspiration : int</code></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    HEADERS:
+                                    <ul class="m-4">
+                                        <li><code>Authorization: Bearer {token}</code></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    PARAMETERS : <code>section_id : int</code>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="ml-4" id="s8">
                             <h1 class="font-bold text-xl">/student/me/assign-section/{section_id}</h1>
                             <ul class="space-y-3 m-4">
                                 <li>METHOD: PATCH</li>

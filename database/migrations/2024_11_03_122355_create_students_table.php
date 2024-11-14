@@ -26,6 +26,7 @@ return new class extends Migration
             $table->integer('ecology_mastery')->default(0);
             $table->integer('momentum_mastery')->default(0);
             $table->integer('quantum_mastery')->default(0);
+            $table->integer('aspiration')->default(0);
             $table->timestamps();
         });
     }
