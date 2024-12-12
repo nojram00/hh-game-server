@@ -82,7 +82,7 @@ class StudentApiController extends Controller
             return response()->json([
                 'message' => 'Student Profile Created!',
                 'data' => $student,
-                'token' => $token
+                'token' => $token->plainTextToken
             ], 200);
 
         } catch (Exception $e) {
