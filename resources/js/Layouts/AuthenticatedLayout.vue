@@ -41,7 +41,7 @@ const showingNavigationDropdown = ref(false);
                                 <NavLink v-if="$page.props.auth.user.role == 'admin'" :href="route('teachers')" :active="route().current('teachers')">
                                     Teachers
                                 </NavLink>
-                                <NavLink v-if="$page.props.auth.user.role == 'teacher'" :href="route('teachers')" :active="route().current('teachers')">
+                                <NavLink v-if="$page.props.auth.user.role == 'teacher'" :href="route('teachers')" :active="route().current('my-section')">
                                     My Students
                                 </NavLink>
                             </div>
