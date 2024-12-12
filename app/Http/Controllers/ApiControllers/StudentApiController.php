@@ -39,7 +39,7 @@ class StudentApiController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StudentProfile $request)
+    public function store(Request $request)
     {
         // $request->validate();
 
@@ -72,12 +72,16 @@ class StudentApiController extends Controller
 
             $student->save();
 
+            Auth::login($user);
+
+            $token = $request->user()->createToken("access-token");
 
             DB::commit();
 
             return response()->json([
                 'message' => 'Student Profile Created!',
-                'data' => $student
+                'data' => $student,
+                'token' => $token
             ], 200);
 
         } catch (Exception $e) {
@@ -124,7 +128,7 @@ class StudentApiController extends Controller
         ],400);
     }
 
-    public function update_score(ScoreData $request)
+    public function update_score(Request $request)
     {
         // $request->validate();
 
@@ -146,7 +150,7 @@ class StudentApiController extends Controller
         ],400);
     }
 
-    public function update_progress(ProgressData $request)
+    public function update_progress(Request $request)
     {
         // $request->validate();
 
