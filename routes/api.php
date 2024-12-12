@@ -32,10 +32,10 @@ Route::prefix('/v1')->group(function(){
         Route::post('/student/assign-section', 'assign');
 
         Route::middleware('auth:sanctum')->group(function(){
-            Route::patch('/student/update/score', 'update_score');
-            Route::patch('/student/update/progress', 'update_progress');
-            Route::patch('/student/update/aspiration', 'update_aspiration');
-            Route::patch('/student/me/assign-section/{section}', 'assign_self');
+            Route::put('/student/update/score', 'update_score');
+            Route::put('/student/update/progress', 'update_progress');
+            Route::put('/student/update/aspiration', 'update_aspiration');
+            Route::put('/student/me/assign-section/{section}', 'assign_self');
         });
     });
 
