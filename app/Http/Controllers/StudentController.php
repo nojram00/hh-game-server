@@ -73,4 +73,13 @@ class StudentController extends Controller
             ->save();
     }
 
+    public function destroy(Student $student)
+    {
+        $student->user()->delete();
+
+        $student->delete();
+
+        return \redirect(\route('students'));
+    }
+
 }

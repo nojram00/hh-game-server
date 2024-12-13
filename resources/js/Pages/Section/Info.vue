@@ -3,7 +3,7 @@
     <AuthenticatedLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-400 leading-tight">Section - {{  section_name }}</h2>
-            <p>Teacher: {{ teacher }}</p>
+            <p class="text-white">Teacher: {{ teacher }}</p>
         </template>
 
         <div class="px-4 w-full relative h-[720px]">

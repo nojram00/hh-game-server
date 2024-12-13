@@ -5,7 +5,15 @@
         />
     </svg> -->
 
+    
+    
     <div class="h-full flex items-center justify-center">
-        <h1 class="text-gray-400"><code>Game Server Admin</code></h1>
+        <h1 class="text-gray-400"><code>Harmony's Haven</code></h1>
     </div>
 </template>
+
+
+<script setup>
+import Logo from "@/Components/Logo.vue"
+
+</script>

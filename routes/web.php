@@ -77,6 +77,7 @@ Route::middleware('auth')->group(function () {
         Route::middleware('role.admin')->group(function(){
             Route::get('/students', 'student_view')->name('students');
             Route::get('/student/{student}', 'info')->name('student');
+            Route::delete('/delete-student/{student}', 'destroy')->name('delete-student');
         });
 
         Route::middleware('role.teacher')->group(function(){

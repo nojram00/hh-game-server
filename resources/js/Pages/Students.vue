@@ -32,7 +32,12 @@
                         <td>{{ student.ecology_mastery }}</td>
                         <td>{{ student.momentum_mastery }}</td>
                         <td>{{ student.quantum_mastery }}</td>
-                        <td><Link :href="route('student', student.id)">More</Link></td>
+                        <td>
+                            <div class="flex flex-row gap-3">
+                                <Link :href="route('student', student.id)">View</Link>
+                                <button @click="toggle_alert(student.id)">Delete</button>
+                            </div>
+                            </td>
                     </tr>
                 </tbody>
             </table>
@@ -56,7 +61,7 @@
 import Container from '@/Components/Container.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import Pagination from '@/Components/Pagination.vue';
-import { Head, Link } from '@inertiajs/vue3';
+import { Head, Link, router } from '@inertiajs/vue3';
 
 defineProps({
     students: {
@@ -64,6 +69,15 @@ defineProps({
         required: true
     }
 })
+
+    if(confirm(`Are you sure you want to delete this student (id: ${targetId})?`))
+    {
+        router.delete(route('delete-student', targetId))
+    }
+    else
+    {
+        alert("Delete Cancelled");
+    }
 </script>
 <style lang="">
 
