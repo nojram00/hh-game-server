@@ -35,7 +35,7 @@
                 />
             </div>
 
-            <div class="relative">
+            <!-- <div class="relative">
 
                 <InputLabel for="teachers" value="Section"/>
 
@@ -74,7 +74,7 @@
                         </button>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
             <div class="flex items-center gap-4">
                 <PrimaryButton :disabled="form.processing">Save</PrimaryButton>
