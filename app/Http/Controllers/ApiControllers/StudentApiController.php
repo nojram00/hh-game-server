@@ -73,6 +73,13 @@ class StudentApiController extends Controller
 
             $student->save();
 
+            if($request->section_id != \null)
+            {
+                $section = Section::find($request->section_id);
+                $student->section()->associate($section);
+                $student->save();
+            }
+
             Auth::login($user);
 
             $token = $request->user()->createToken("access-token");

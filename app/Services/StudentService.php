@@ -16,11 +16,6 @@ class StudentService
             'section_id' => $section_id
         ]);
 
-        if($section != \null)
-        {
-            $student->section()->associate($section);
-        }
-
         $student->save();
 
         return $student;
