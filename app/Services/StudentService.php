@@ -7,13 +7,18 @@ use App\Models\Student;
 
 class StudentService
 {
-    public function create_student($firstname, $lastname, $middlename = null)
+    public function create_student($firstname, $lastname, $middlename = null, Section $section = \null)
     {
         $student = new Student([
             'firstname' => $firstname,
             'lastname' => $lastname,
             'middlename' => $middlename
         ]);
+
+        if($section != \null)
+        {
+            $student->section()->associate($section);
+        }
 
         $student->save();
 

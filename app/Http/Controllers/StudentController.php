@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StudentFilter;
+use App\Models\Section;
 use App\Models\Student;
 use App\Models\User;
 use App\Services\StudentService;
@@ -60,11 +61,13 @@ class StudentController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
+        $section = $request->section_id != null ? Section::find($request->section_id) : \null;
         $this->studentService
             ->create_student(
                 $request->firstname,
                 $request->lastname,
-                $request->middlename
+                $request->middlename,
+                $section
             )
             ->assign_user($user)
             ->save();
