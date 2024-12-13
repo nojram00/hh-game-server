@@ -70,6 +70,7 @@ defineProps({
     }
 })
 
+const toggle_alert = (targetId) => {
     if(confirm(`Are you sure you want to delete this student (id: ${targetId})?`))
     {
         router.delete(route('delete-student', targetId))
@@ -78,6 +79,9 @@ defineProps({
     {
         alert("Delete Cancelled");
     }
+}   
+
+    
 </script>
 <style lang="">
 
