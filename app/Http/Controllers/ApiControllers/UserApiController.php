@@ -11,14 +11,28 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class UserApiController extends Controller
 {
-    public function generate_token(LoginRequest $request)
+    public function generate_token(Request $request)
     {
-        $token = $request->generate_token();
+        $request->validate([
+            'email' => 'required|string',
+            'password' => 'required|string'
+        ]);
+
+        if(Auth::attempt($request->only('email','password')))
+        {
+            $token = $request->generate_token();
+
+            return response()->json([
+                'message' => 'Auth success!',
+                'token' => $token
+            ]);
+        }
 
         return response()->json([
-            'message' => 'Auth success!',
-            'token' => $token
-        ]);
+            'message' => 'Auth failed',
+            // 'token' => $token
+        ], '402');
+        
     }
 
     public function get_student_info(Request $request)
