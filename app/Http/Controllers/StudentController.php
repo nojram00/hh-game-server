@@ -67,7 +67,7 @@ class StudentController extends Controller
                 $request->firstname,
                 $request->lastname,
                 $request->middlename,
-                $request->section_id ?? null
+                $request->section_id
             )
             ->assign_user($user)
             ->save();
