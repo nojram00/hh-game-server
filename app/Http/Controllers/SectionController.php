@@ -176,4 +176,16 @@ class SectionController extends Controller
             'teacher' => $teacher
         ]);
     }
+
+    public function destroy(Section $section)
+    {
+        $deleted = $section->delete();
+
+        if($deleted)
+        {
+            return \redirect(route('sections'))->with('message', 'Section Deleted!');
+        }
+        return \redirect(route('sections'))->with('error', 'Section Failed to delete');
+
+    }
 }

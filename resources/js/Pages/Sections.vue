@@ -23,7 +23,13 @@
                     <tr v-for="section in sections.data" class="text-lg">
                         <td>{{ section.section_name }}</td>
                         <td>{{ section.students_count }}</td>
-                        <td><Link :href="route('section', section.id)">More</Link></td>
+                        <td>
+                            <div class="flex flex-row gap-3">
+                                <Link :href="route('section', section.id)">View</Link>
+                                <Link :href="route('edit-section.get', section.id)">Update</Link>
+                                <button @click="toggle_alert(section.id)">Delete</button>
+                            </div>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -46,8 +52,22 @@
 <script setup>
 import Container from '@/Components/Container.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head, Link } from '@inertiajs/vue3';
+import { Head, Link, router } from '@inertiajs/vue3';
 import Pagination from '@/Components/Pagination.vue';
+
+const toggle_alert = (targetId) => {
+
+    if(confirm(`Are you sure you want to delete this section (id: ${targetId})?`))
+    {
+        router.delete(route('delete-section', targetId))
+    }
+    else
+    {
+        alert("Delete Cancelled");
+    }
+
+
+}
 
 defineProps({
     sections: {

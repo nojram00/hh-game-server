@@ -98,6 +98,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/create-section', 'create')->name('create-section.post');
             Route::get('/edit-section/{section}', 'edit')->name('edit-section.get');
             Route::patch('/edit-section/{section}', 'update')->name('edit-section.patch');
+            Route::delete('/delete-section/{section}', 'destroy')->name('delete-section');
         });
     });
 
