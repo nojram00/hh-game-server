@@ -6,6 +6,7 @@ use App\Http\Requests\SectionRequest;
 use App\Models\Section;
 use App\Models\Teacher;
 use App\Services\SectionService;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
@@ -137,9 +138,36 @@ class SectionController extends Controller
         $teacher = $request->user()->teacher;
         $section = $request->user()->teacher->section;
 
+        // return \response()->json($section->students()->paginate(20));
         if($section != null && $section->students != null)
         {
-            $students = $section->students->paginate(20);
+            $students = $section->students()->paginate(20);
+
+            return Inertia::render('MySection', [
+                'section' => $section,
+                'students' => $students ?? null,
+                'teacher' => $teacher
+            ]);
+
+            // try
+            // {
+
+            //     $students = $section->students->paginate(20);
+
+            //     return Inertia::render('MySection', [
+            //         'section' => $section,
+            //         'students' => $students ?? null,
+            //         'teacher' => $teacher
+            //     ]);
+            // }
+            // catch(Exception $e)
+            // {
+            //     return Inertia::render('MySection', [
+            //         'section' => null,
+            //         'students' => $students ?? null,
+            //         'teacher' => $teacher
+            //     ]);
+            // }
         }
 
         return Inertia::render('MySection', [
