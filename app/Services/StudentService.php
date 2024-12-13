@@ -7,12 +7,13 @@ use App\Models\Student;
 
 class StudentService
 {
-    public function create_student($firstname, $lastname, $middlename = null, Section $section = \null)
+    public function create_student($firstname, $lastname, $middlename = null, $section_id = null)
     {
         $student = new Student([
             'firstname' => $firstname,
             'lastname' => $lastname,
-            'middlename' => $middlename
+            'middlename' => $middlename,
+            'section_id' => $section_id
         ]);
 
         if($section != \null)

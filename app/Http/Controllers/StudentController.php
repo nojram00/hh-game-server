@@ -61,13 +61,13 @@ class StudentController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        $section = $request->section_id != null ? Section::find($request->section_id) : \null;
+        
         $this->studentService
             ->create_student(
                 $request->firstname,
                 $request->lastname,
                 $request->middlename,
-                $section
+                $request->section_id ?? null
             )
             ->assign_user($user)
             ->save();
